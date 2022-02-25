@@ -66,6 +66,7 @@ $('head').append('<link rel="stylesheet" type="text/css" href="QuizEra.css">'); 
 
             log(`Generating quiz with width ${width}px...`);
             const height = 400;
+            const quiz_id = Math.random().toString(36).replace(/[^a-z]+/g, '').substring(2, 6);
             
             // Ensuring the preconditions are met
             if (this.nodes.length < 2) {
@@ -195,7 +196,7 @@ $('head').append('<link rel="stylesheet" type="text/css" href="QuizEra.css">'); 
                 keys_to_remove.forEach(key => {this.answers.delete(key)});
 
                 this.answers.set(year, tag);
-                document.getElementById(`choice-${tag}`).style.backgroundColor = '#d3d3d3';
+                document.getElementById(`choice-${quiz_id}-${tag}`).style.backgroundColor = '#d3d3d3';
                 _setNewVals();
             }
 
@@ -322,7 +323,7 @@ $('head').append('<link rel="stylesheet" type="text/css" href="QuizEra.css">'); 
                     }
 
                     const choice = document.createElement('div');
-                    choice.id = `choice-${tag}`;
+                    choice.id = `choice-${quiz_id}-${tag}`;
                     choice.style = `position: relative; width: 125px; height: 145px; margin-right: 2px; margin-left: 2px;
                         border: 2px solid black; border-radius: 5%; display: inline-block;`;
                     choice.style.backgroundColor = 'white';
@@ -356,7 +357,7 @@ $('head').append('<link rel="stylesheet" type="text/css" href="QuizEra.css">'); 
                 let num_correct = 0;
                 for (const [key, value] of this.key.entries()) {
                     if (this.answers.has(key)) {
-                        const choice_element = document.getElementById(`choice-${this.answers.get(key)}`);
+                        const choice_element = document.getElementById(`choice-${quiz_id}-${this.answers.get(key)}`);
                         if (value === this.answers.get(key)) {
                             num_correct++;
                             choice_element.style.backgroundColor = '#95ffac'; // If the node is correctly placed, color the choice green
